@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} font-sans h-full overflow-hidden`}>
-      <body className="h-full h-[100dvh] max-h-screen overflow-hidden bg-[#070919] text-white selection:bg-indigo-500 selection:text-white font-sans antialiased">
+    <html lang="en" className={`${plusJakartaSans.variable} font-sans`}>
+      <body className="bg-[#070919] text-white selection:bg-indigo-500 selection:text-white font-sans antialiased">
         {children}
       </body>
     </html>

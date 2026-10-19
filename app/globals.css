@@ -10,13 +10,14 @@
     --foreground: #ffffff;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   html,
   body {
-    height: 100vh;
-    height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
-    overflow: hidden !important;
+    min-height: 100vh;
+    min-height: 100dvh;
     background-color: #070919;
     color: #ffffff;
     font-family: var(--font-sans);
@@ -24,18 +25,18 @@
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  ::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
   }
 }
 
-/* Custom background grid styling */
+/* Restrained indigo glow used behind lower page sections */
+.section-glow {
+  background: radial-gradient(
+    ellipse 60% 45% at 50% 0%,
+    rgba(56, 73, 184, 0.14) 0%,
+    rgba(34, 46, 134, 0.06) 55%,
+    transparent 100%
+  );
+}
 .hero-grid-pattern {
   background-size: 80px 80px;
   background-image: 
@@ -61,4 +62,53 @@
     rgba(182, 196, 243, 0.45) 80%,
     rgba(215, 224, 250, 0.75) 100%
   );
+}
+
+/* ---- Polish: interaction + motion details ---- */
+
+/* FAQ accordion open motion */
+details.faq-item > .faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.28s ease;
+}
+details.faq-item[open] > .faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+details.faq-item > .faq-answer > div {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details.faq-item > .faq-answer {
+    transition: none;
+  }
+}
+
+/* Refined focus states for keyboard users */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(129, 140, 248, 0.9);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Card hover lift — shared by feature / step / pricing cards */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease, background-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-lift,
+  .card-lift:hover {
+    transform: none;
+  }
 }

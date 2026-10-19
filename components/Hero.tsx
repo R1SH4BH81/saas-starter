@@ -7,7 +7,7 @@ import Silk from './Silk';
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative h-screen h-[100dvh] max-h-screen w-full flex flex-col justify-between overflow-hidden bg-[#070919]">
+    <section className="relative min-h-screen min-h-[100dvh] w-full flex flex-col justify-between overflow-hidden bg-[#070919]">
       {/* 1. Base Gradient Background */}
       <div className="absolute inset-0 hero-radial-glow pointer-events-none" />
 

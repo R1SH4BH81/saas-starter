@@ -1,15 +1,36 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+const links = [
+  { href: '#features', label: 'Platform' },
+  { href: '#how-it-works', label: 'How it works' },
+  { href: '#customers', label: 'Customers' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#faq', label: 'FAQ' },
+];
+
 export const Navbar: React.FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="relative z-20 w-full pt-2.5 sm:pt-4 flex-shrink-0">
-
-
+    <header
+      className={`sticky top-0 z-20 w-full flex-shrink-0 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#070919]/80 backdrop-blur-xl border-b border-white/[0.06]'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
       {/* Main Navigation Bar */}
-      <nav className="max-w-7xl mx-auto px-6 sm:px-8 py-1.5 sm:py-2.5 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-between">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
           <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
@@ -17,7 +38,7 @@ export const Navbar: React.FC = () => {
               viewBox="0 0 40 40"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-7 h-7 sm:w-8 sm:h-8 text-white transition-transform duration-300 group-hover:rotate-45"
+              className="w-7 h-7 sm:w-8 sm:h-8 text-white transition-transform duration-500 ease-out group-hover:rotate-90"
             >
               <circle cx="20" cy="20" r="19" stroke="currentColor" strokeWidth="2.2" strokeOpacity="0.8" />
               <path
@@ -35,41 +56,29 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Center: Menu Items */}
-        <div className="hidden md:flex items-center gap-8 text-[14.5px] font-normal text-gray-200/90">
-          <button className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer">
-            Platform
-            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <button className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer">
-            Solutions
-            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <Link href="#community" className="hover:text-white transition-colors">
-            Community
-          </Link>
-          <button className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer">
-            Resources
-            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+        <div className="hidden md:flex items-center gap-8 text-[14.5px] font-normal">
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="relative text-gray-200/80 hover:text-white transition-colors duration-200 after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-indigo-300 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              {l.label}
+            </Link>
+          ))}
         </div>
 
         {/* Right: Actions */}
         <div className="flex items-center gap-4 sm:gap-6">
           <Link
             href="#signin"
-            className="text-sm sm:text-[15px] font-normal text-gray-200/90 hover:text-white transition-colors"
+            className="hidden sm:inline text-sm sm:text-[15px] font-normal text-gray-200/80 hover:text-white transition-colors duration-200"
           >
             Sign in
           </Link>
           <Link
             href="#demo"
-            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#5252ff] hover:bg-[#4343f0] text-white text-xs sm:text-sm font-medium shadow-[0_2px_14px_rgba(82,82,255,0.4)] hover:shadow-[0_4px_20px_rgba(82,82,255,0.6)] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#5252ff] hover:bg-[#6161ff] text-white text-xs sm:text-sm font-medium shadow-[0_2px_14px_rgba(82,82,255,0.45)] hover:shadow-[0_6px_24px_rgba(82,82,255,0.65)] transition-all duration-200 hover:-translate-y-px active:translate-y-0 active:scale-[0.98]"
           >
             Request a demo
           </Link>
